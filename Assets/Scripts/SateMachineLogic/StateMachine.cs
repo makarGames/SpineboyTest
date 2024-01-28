@@ -6,8 +6,9 @@ namespace SateMachineLogic
     public class StateMachine
     {
         private Dictionary<Type, IState> _statesMap = new();
-        private IState _currentState;
-
+        public IState CurrentState { get; private set; }
+        public Type CurrentStateType { get; private set; }
+        
         public StateMachine(IEnumerable<IState> states)
         {
             foreach (var state in states)
@@ -19,9 +20,10 @@ namespace SateMachineLogic
         public void SetCurrentState<T>() where T : IState
         {
             var newState = GetState<T>();
-            _currentState?.Exit();
-            _currentState = newState;
-            _currentState.Enter();
+            CurrentState?.Exit();
+            CurrentState = newState;
+            CurrentStateType = typeof(T);
+            CurrentState.Enter();
         }
 
         private T GetState<T>() where T : IState
@@ -32,7 +34,7 @@ namespace SateMachineLogic
 
         public void UpdateCurrentState()
         {
-            _currentState.Update();
+            CurrentState.Update();
         }
     }
 }

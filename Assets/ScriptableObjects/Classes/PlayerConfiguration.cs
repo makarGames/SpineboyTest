@@ -7,8 +7,13 @@ namespace ScriptableObjects.Classes
     [CreateAssetMenu(menuName = "MyData/PlayerSettings")]
     public class PlayerConfiguration : ScriptableObject
     {
-        [SerializeField] private float _movementSpeed;
+        [SerializeField] private float _movementInertia;
+        [SerializeField] private float _movementSpeedThreshold;
 
-        public float MovementSpeed => _movementSpeed;
+        [SerializeField] private float _cursorDistanceThreshold;
+
+        public float MovementInertia => _movementInertia;
+        public float MovementSpeedThreshold => _movementSpeedThreshold;
+        public float CursorDistanceThreshold => _cursorDistanceThreshold;
     }
 }

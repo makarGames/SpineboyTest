@@ -1,11 +1,8 @@
-using System;
-using System.Collections.Generic;
-using CharacterLogic;
+using Infrastructure;
 using SateMachineLogic;
 using SateMachineLogic.PlayerStates;
-using ScriptableObjects.Classes;
 using UnityEngine;
-using UnityEngine.PlayerLoop;
+using Utils;
 
 namespace PlayerLogic
 {
@@ -15,9 +12,19 @@ namespace PlayerLogic
 
         private StateMachine _stateMachine;
 
-        private void Awake()
+        private void Start()
         {
             InitializeStateMachine();
+        }
+
+        private void Update()
+        {
+            _stateMachine.UpdateCurrentState();
+        }
+
+        private void LateUpdate()
+        {
+            CheckMovingThreshold();
         }
 
         private void InitializeStateMachine()
@@ -32,7 +39,38 @@ namespace PlayerLogic
             };
 
             _stateMachine = new StateMachine(states);
-            _stateMachine.SetCurrentState<IdlePlayerState>();
+            _stateMachine.SetCurrentState<MovingPlayerState>();
         }
+
+        private void CheckMovingThreshold()
+        {
+            if (_stateMachine.CurrentStateType != typeof(MovingPlayerState))
+            {
+                var currentDistance = Mathf.Abs(PlayerInput.CursorPosition.x - _playerData.PlayerTransform.position.x);
+
+                if (CursorInsideBounds() && currentDistance > _playerData.PlayerConfiguration.CursorDistanceThreshold)
+                {
+                    _stateMachine.SetCurrentState<MovingPlayerState>();
+                }
+            }
+            else if (((MovingPlayerState)_stateMachine.CurrentState).CurrentSpeed <=
+                     _playerData.PlayerConfiguration.MovementSpeedThreshold)
+            {
+                _stateMachine.SetCurrentState<IdlePlayerState>();
+            }
+        }
+
+        private bool CursorInsideBounds()
+        {
+            var bounds = _playerData.PlayerRenderer.bounds;
+
+            var minX = CameraHolder.ScreenBounds.x + bounds.extents.x;
+            var maxX = CameraHolder.ScreenBounds.y - bounds.extents.x;
+
+            var cursorInsideBounds = (PlayerInput.CursorPosition.x >= minX && PlayerInput.CursorPosition.x <= maxX);
+            
+            return cursorInsideBounds;
+        }
+
     }
 }

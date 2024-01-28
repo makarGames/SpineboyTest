@@ -1,5 +1,5 @@
 ﻿using PlayerLogic;
-using ScriptableObjects.Classes;
+using UnityEngine;
 
 namespace SateMachineLogic.PlayerStates
 {
@@ -7,10 +7,13 @@ namespace SateMachineLogic.PlayerStates
     {
         public IdlePlayerState(PlayerData playerData) : base(playerData)
         {
+          
         }
         
         public override void Enter()
         {
+            Debug.Log("Idle");
+            playerData.PlayerAnimator.PlayIdle();
         }
 
         public override void Update()
@@ -20,7 +23,5 @@ namespace SateMachineLogic.PlayerStates
         public override void Exit()
         {
         }
-
-        
     }
 }
