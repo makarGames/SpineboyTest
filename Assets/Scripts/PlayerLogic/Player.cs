@@ -12,6 +12,8 @@ namespace PlayerLogic
 
         private StateMachine _stateMachine;
 
+        public PlayerData PlayerData => _playerData;
+
         private void Start()
         {
             InitializeStateMachine();
@@ -39,14 +41,14 @@ namespace PlayerLogic
             };
 
             _stateMachine = new StateMachine(states);
-            _stateMachine.SetCurrentState<MovingPlayerState>();
+            _stateMachine.SetCurrentState<IdlePlayerState>();
         }
 
         private void CheckMovingThreshold()
         {
             if (_stateMachine.CurrentStateType != typeof(MovingPlayerState))
             {
-                var currentDistance = Mathf.Abs(PlayerInput.CursorPosition.x - _playerData.PlayerTransform.position.x);
+                var currentDistance = Mathf.Abs(PlayerInput.CursorWorldPosition.x - _playerData.PlayerTransform.position.x);
 
                 if (CursorInsideBounds() && currentDistance > _playerData.PlayerConfiguration.CursorDistanceThreshold)
                 {
@@ -67,10 +69,9 @@ namespace PlayerLogic
             var minX = CameraHolder.ScreenBounds.x + bounds.extents.x;
             var maxX = CameraHolder.ScreenBounds.y - bounds.extents.x;
 
-            var cursorInsideBounds = (PlayerInput.CursorPosition.x >= minX && PlayerInput.CursorPosition.x <= maxX);
-            
+            var cursorInsideBounds = (PlayerInput.CursorWorldPosition.x >= minX && PlayerInput.CursorWorldPosition.x <= maxX);
+
             return cursorInsideBounds;
         }
-
     }
 }

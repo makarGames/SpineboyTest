@@ -34,7 +34,7 @@ namespace SateMachineLogic.PlayerStates
 
         private void MovePlayer()
         {
-            var targetXPosition = GetClampedPosition(PlayerInput.CursorPosition.x);
+            var targetXPosition = GetClampedPosition(PlayerInput.CursorWorldPosition.x);
             var newXPosition = Mathf.Lerp(CurrentPlayerPosition.x, targetXPosition, MovementInertia * Time.deltaTime);
 
             CurrentSpeed = Mathf.Abs(newXPosition - CurrentPlayerPosition.x) / Time.deltaTime;

@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 923108834104609105}
   - component: {fileID: 9107345324603839843}
   - component: {fileID: 7926056257863763138}
+  - component: {fileID: 8815033485217013030}
   m_Layer: 0
   m_Name: Visual
   m_TagString: Untagged
@@ -98,9 +99,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _skeletonAnimation: {fileID: 7926056257863763138}
-  _stepDuration: 0.075
+  _stepDuration: 0.09
   _runAnimationName: run
   _idleAnimationName: idle
+  _aimAnimationName: aim
 --- !u!114 &7926056257863763138
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -141,6 +143,22 @@ MonoBehaviour:
   _animationName: idle
   loop: 0
   timeScale: 1
+--- !u!114 &8815033485217013030
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2615166342287378653}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f726fb798ad621458c431cb9966d91d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  boneRoot: {fileID: 0}
+  flipBy180DegreeRotation: 0
+  skeletonRenderer: {fileID: 7926056257863763138}
+  skeletonGraphic: {fileID: 0}
 --- !u!1 &8031653199031451731
 GameObject:
   m_ObjectHideFlags: 0
@@ -151,6 +169,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7962017939979563475}
   - component: {fileID: 7006706287174312594}
+  - component: {fileID: 9042744932928783200}
   m_Layer: 0
   m_Name: Spineboy
   m_TagString: Untagged
@@ -191,3 +210,19 @@ MonoBehaviour:
     _playerTransform: {fileID: 7962017939979563475}
     _playerRenderer: {fileID: 923108834104609105}
     _playerAnimator: {fileID: 9107345324603839843}
+    _crosshairBoneName: gun
+--- !u!114 &9042744932928783200
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8031653199031451731}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c44ffb1af69ad8f4a9214e43f8c2497e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _player: {fileID: 7006706287174312594}
+  _closeAimRotationOffset: -20
+  _farAimRotationOffset: -30

@@ -10,20 +10,26 @@ namespace PlayerLogic
         [SerializeField] private SkeletonAnimation _skeletonAnimation;
         [SerializeField] private float _stepDuration;
 
-        [SpineAnimation] public string _runAnimationName;
-        [SpineAnimation] public string _idleAnimationName;
-
-        private float _animationSpeed = 1f;
+        [SerializeField] [SpineAnimation] private string _runAnimationName;
+        [SerializeField] [SpineAnimation] private string _idleAnimationName;
+        [SerializeField] [SpineAnimation] private string _aimAnimationName;
 
         private float _stepTime;
         private bool _isRunning = true;
+
+        public SkeletonAnimation SkeletonAnimation => _skeletonAnimation;
+
+        private void Start()
+        {
+            PlayIdle();
+        }
 
         private void Update()
         {
             if (_isRunning)
             {
                 _stepTime = Mathf.Repeat((transform.position.x - CameraHolder.ScreenBounds.x) * _stepDuration, 1);
-                
+
                 _skeletonAnimation.state.GetCurrent(0).TrackTime =
                     _stepTime * _skeletonAnimation.state.GetCurrent(0).AnimationEnd;
             }
@@ -41,6 +47,15 @@ namespace PlayerLogic
             _skeletonAnimation.state.SetAnimation(0, _idleAnimationName, true).TimeScale = 1;
         }
 
+        public void StartAim()
+        {
+             _skeletonAnimation.state.SetAnimation(1, _aimAnimationName, false);
+        }
+
+        public void StopAim()
+        {
+            _skeletonAnimation.state.AddEmptyAnimation(1, 0.5f, 0);
+        }
 
         private void OnValidate()
         {

@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f58bdcbafe6248e186ff73cd6305c812, type: 3}
   m_Name: PlayerConfiguration
   m_EditorClassIdentifier: 
-  _movementInertia: 3
+  _movementInertia: 2.2
   _movementSpeedThreshold: 1
-  _cursorDistanceThreshold: 0.75
+  _cursorDistanceThreshold: 1
